@@ -49,10 +49,15 @@ public class AMapFlutterLocationPlugin implements FlutterPlugin, MethodCallHandl
       case "destroy":
         destroy((Map) call.arguments);
         break;
+      case "updatePrivacyShow":
+        updatePrivacyShow((Map) call.arguments);
+        break;
+      case "updatePrivacyAgree":
+        updatePrivacyAgree((Map) call.arguments);
+        break;
       default:
         result.notImplemented();
         break;
-
     }
   }
 
@@ -66,6 +71,18 @@ public class AMapFlutterLocationPlugin implements FlutterPlugin, MethodCallHandl
     for (Map.Entry<String, AMapLocationClientImpl> entry : locationClientMap.entrySet()) {
       entry.getValue().stopLocation();
     }
+  }
+
+  /**
+   * 更新隐私弹窗
+   * @param argsMap
+   */
+  void updatePrivacyShow(Map argsMap){
+    AMapLocationClient.updatePrivacyShow(mContext, (boolean) argsMap.get("isContains"), (boolean) argsMap.get("isShow"));
+  }
+
+  void updatePrivacyAgree(Map argsMap){
+    AMapLocationClient.updatePrivacyAgree(mContext, (boolean) argsMap.get("isAgree"));
   }
 
   /**
@@ -168,7 +185,12 @@ public class AMapFlutterLocationPlugin implements FlutterPlugin, MethodCallHandl
     }
 
     if (!locationClientMap.containsKey(pluginKey)) {
-      AMapLocationClientImpl locationClientImp = new AMapLocationClientImpl(mContext, pluginKey, mEventSink);
+      AMapLocationClientImpl locationClientImp = null;
+      try {
+        locationClientImp = new AMapLocationClientImpl(mContext, pluginKey, mEventSink);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       locationClientMap.put(pluginKey, locationClientImp);
     }
     return locationClientMap.get(pluginKey);

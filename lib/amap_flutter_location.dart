@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:flutter/services.dart';
+
 import 'amap_location_option.dart';
 
 ///高德定位Flutter插件入口类
@@ -8,11 +10,9 @@ class AMapFlutterLocation {
   static const String _CHANNEL_METHOD_LOCATION = "amap_flutter_location";
   static const String _CHANNEL_STREAM_LOCATION = "amap_flutter_location_stream";
 
-  static const MethodChannel _methodChannel =
-      const MethodChannel(_CHANNEL_METHOD_LOCATION);
+  static const MethodChannel _methodChannel = const MethodChannel(_CHANNEL_METHOD_LOCATION);
 
-  static const EventChannel _eventChannel =
-      const EventChannel(_CHANNEL_STREAM_LOCATION);
+  static const EventChannel _eventChannel = const EventChannel(_CHANNEL_STREAM_LOCATION);
 
   static Stream<Map<String, Object>> _onLocationChanged = _eventChannel
       .receiveBroadcastStream()
@@ -23,12 +23,33 @@ class AMapFlutterLocation {
   StreamSubscription<Map<String, Object>>? _subscription;
   String? _pluginKey;
 
+  ///  设置包含隐私政策，并展示用户授权弹窗，【 必须在AmapLocationClient实例化之前调用 】
+  ///  @param isContains: 是隐私权政策是否包含高德开平隐私权政策  true是包含
+  ///  @param isShow: 隐私权政策是否弹窗展示告知用户 true是展示
+  ///  @since 5.6.0
+  static void updatePrivacyShow(bool isContains, bool isShow) {
+    if (Platform.isAndroid) {
+      _methodChannel.invokeMethod('updatePrivacyShow', {
+        'isContains': isContains,
+        'isShow': isShow,
+      });
+    }
+  }
+
+  ///  设置是否同意用户授权政策 必须在AmapLocationClient实例化之前调用
+  ///  @param isAgree:隐私权政策是否取得用户同意  true是用户同意
+  ///  @since 5.6.0
+  static void updatePrivacyAgree(bool isAgree) {
+    if (Platform.isAndroid) {
+      _methodChannel.invokeMethod('updatePrivacyAgree', {'isAgree': isAgree});
+    }
+  }
+
   /// 适配iOS 14定位新特性，只在iOS平台有效
   Future<AMapAccuracyAuthorization> getSystemAccuracyAuthorization() async {
     int result = -1;
     if (Platform.isIOS) {
-      result = await _methodChannel.invokeMethod(
-          "getSystemAccuracyAuthorization", {'pluginKey': _pluginKey});
+      result = await _methodChannel.invokeMethod("getSystemAccuracyAuthorization", {'pluginKey': _pluginKey});
     }
     if (result == 0) {
       return AMapAccuracyAuthorization.AMapAccuracyAuthorizationFullAccuracy;
@@ -62,8 +83,7 @@ class AMapFlutterLocation {
   ///[androidKey] Android平台的key<br>
   ///[iosKey] ios平台的key<br>
   static void setApiKey(String androidKey, String iosKey) {
-    _methodChannel
-        .invokeMethod('setApiKey', {'android': androidKey, 'ios': iosKey});
+    _methodChannel.invokeMethod('setApiKey', {'android': androidKey, 'ios': iosKey});
   }
 
   /// 设置定位参数
