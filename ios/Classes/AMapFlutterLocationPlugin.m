@@ -73,6 +73,10 @@
         }
     }else if ([@"getSystemAccuracyAuthorization" isEqualToString:call.method]) {
         [self getSystemAccuracyAuthorization:call result:result];
+    } else if([@"updatePrivacyShow" isEqualToString:call.method]) {
+      [AMapLocationManager updatePrivacyAgree:1];
+    } else if([@"updatePrivacyAgree" isEqualToString:call.method]) {
+      [AMapLocationManager updatePrivacyShow:1 privacyInfo:1];
     }else {
         result(FlutterMethodNotImplemented);
     }

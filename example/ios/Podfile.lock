@@ -1,12 +1,12 @@
 PODS:
   - amap_flutter_location (0.0.1):
-    - AMapLocation (~> 2.6.7)
+    - AMapLocation (~> 2.8.0)
     - Flutter
-  - AMapFoundation (1.6.4)
-  - AMapLocation (2.6.7):
-    - AMapFoundation (~> 1.6.4)
+  - AMapFoundation (1.6.9)
+  - AMapLocation (2.8.0):
+    - AMapFoundation (~> 1.6.9)
   - Flutter (1.0.0)
-  - "permission_handler (5.0.1+1)":
+  - "permission_handler (5.1.0+2)":
     - Flutter
 
 DEPENDENCIES:
@@ -28,12 +28,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  amap_flutter_location: 3e33b57f1aad80b0dfb4b399de857a1a9f071e62
-  AMapFoundation: 3638198dfa40be54648570c3520edefad288286b
-  AMapLocation: a46c30d9930d0f3a3bd21139d8f845d10ac3f01d
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
+  amap_flutter_location: 3f9be989734c7bc8e4476efa59033d069d82cd8e
+  AMapFoundation: 8d8ecbb0b2e9ce5487995360d26c885d94642bfd
+  AMapLocation: 5ef44a1117be7dc541cb7a7d43d03c5ee91e4387
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
 
 PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.11.2
