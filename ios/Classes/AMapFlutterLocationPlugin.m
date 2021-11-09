@@ -35,6 +35,8 @@
     FlutterMethodChannel* channel = [FlutterMethodChannel
                                      methodChannelWithName:@"amap_flutter_location"
                                      binaryMessenger:[registrar messenger]];
+    [AMapLocationManager updatePrivacyAgree:1];
+    [AMapLocationManager updatePrivacyShow:1 privacyInfo:1];
     AMapFlutterLocationPlugin* instance = [[AMapFlutterLocationPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
     
